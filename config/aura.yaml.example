@@ -1,0 +1,38 @@
+# Aura Swarm unified config. Copy to aura.yaml and set values. Do not commit aura.yaml with secrets.
+# Use ${VAR} in values to substitute from environment.
+# This file is the single source of truth; backend and other modules receive these settings.
+
+# --- Launcher ---
+# Run mode for Aura up / down: node | local | docker
+#   node  - ./run node: start/wait DB, then serve
+#   local - ./run local: same as node
+#   docker - Aura up = docker compose up -d; Aura down = docker compose stop
+run_mode: node
+
+# --- Server (backend) ---
+host: "0.0.0.0"
+port: 8000
+
+# --- Database (asyncpg URL) ---
+database_url: "postgresql+asyncpg://postgres:postgres@localhost:5432/agent_backend"
+
+# --- Redis / MinIO ---
+redis_url: "redis://localhost:6379/0"
+minio_endpoint: "localhost:9000"
+minio_access_key: "minioadmin"
+minio_secret_key: "minioadmin"
+minio_bucket: "archives"
+
+# --- Qwen / DashScope API token (二选一：直接写 token，或从环境变量读取) ---
+# qwen_token: "sk-xxx"                                    # Qwen 所需 token（会作为 dashscope_api_key 传给后端）
+# dashscope_api_key: "${DASHSCOPE_API_KEY}"               # 或使用 DashScope 变量名
+# 未设置时需在环境中配置 DASHSCOPE_API_KEY
+
+# Path to shell script for API keys (e.g. ~/.ai_env.sh). Set to "" to disable.
+# ai_env_path: "~/.ai_env.sh"
+
+# --- ./run options ---
+# skip_db_wait: false
+# no_db_password: false
+# use_local_postgres: false
+# dev: false
