@@ -36,6 +36,12 @@ class AuraSettings(BaseModel):
     minio_secret_key: str = "minioadmin"
     minio_bucket: str = "archives"
 
+    # --- 阿里云 OSS (Memory-Base 长期存储，可选) ---
+    oss_endpoint: str | None = Field(None, description="OSS endpoint, e.g. https://oss-cn-hangzhou.aliyuncs.com")
+    oss_access_key_id: str | None = Field(None, description="Aliyun OSS AccessKey ID")
+    oss_access_key_secret: str | None = Field(None, description="Aliyun OSS AccessKey Secret")
+    oss_bucket: str | None = Field(None, description="OSS bucket name for long-term storage")
+
     # --- Config dir (for backend: where models.yaml lives; Aura injects this) ---
     config_dir: str = "config"
 
@@ -51,10 +57,25 @@ class AuraSettings(BaseModel):
     use_local_postgres: bool = False
     dev: bool = False
 
+    def get_oss_endpoint_normalized(self) -> str | None:
+        """Return OSS endpoint with https:// if missing (oss2 需要完整 URL)."""
+        ep = self.oss_endpoint
+        if not ep or not ep.strip():
+            return None
+        ep = ep.strip().rstrip("/")
+        if not ep.startswith("http://") and not ep.startswith("https://"):
+            ep = "https://" + ep
+        return ep
+
     def to_backend_app_yaml_dict(self) -> dict:
         """Dict suitable for backend config/app.yaml (and env substitution)."""
         d = self.model_dump(exclude_none=True)
         d["config_dir"] = "config"
+        # OSS endpoint 规范化后写入 backend
+        if self.oss_endpoint and self.oss_bucket:
+            norm = self.get_oss_endpoint_normalized()
+            if norm:
+                d["oss_endpoint"] = norm
         # Backend 使用 dashscope_api_key；未设时用 qwen_token
         if not d.get("dashscope_api_key") and self.qwen_token:
             d["dashscope_api_key"] = self.qwen_token
