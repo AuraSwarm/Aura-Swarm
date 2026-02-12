@@ -134,6 +134,12 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+# Aura unified config (may contain secrets; example is tracked)
+config/aura.yaml
+
+# Aura generated backend config (from config/aura.yaml)
+.aura/
+
 # Environments
 .env
 .envrc
