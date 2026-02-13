@@ -137,6 +137,10 @@ celerybeat.pid
 # Aura unified config (may contain secrets; example is tracked)
 config/aura.yaml
 
+# Aura 能力扩展配置（本地/环境相关，不提交）
+config/abilities.yaml
+config/abilities.local.yaml
+
 # Aura generated backend config (from config/aura.yaml)
 .aura/
 

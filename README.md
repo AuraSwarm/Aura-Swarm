@@ -31,6 +31,8 @@ Aura configure   # creates config/aura.yaml from config/aura.yaml.example
 
 Then edit `config/aura.yaml` (run_mode, database_url, host, port, etc.). Backend and other modules receive these settings; no need to configure each module separately.
 
+**能力扩展（可选）**：在 Aura 中单独配置能力，不提交到仓库。复制 `config/abilities.yaml.example` 为 `config/abilities.yaml` 后编辑；格式与 backend 的 `local_tools` 一致，同 id 时覆盖 models 中的定义。`config/abilities.yaml` 已加入 `.gitignore`。
+
 ### One-click
 
 | Command | Description |
