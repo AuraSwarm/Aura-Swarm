@@ -168,13 +168,19 @@ def main() -> int:
         if run_mode == "docker":
             _run_backend(["start"])
         else:
-            return _run_run_script(run_mode)
+            code = _run_run_script(run_mode)
+            if code != 0:
+                print("Aura up failed (exit code %d). See output above." % code, file=sys.stderr)
+            return code
     if getattr(args, "func", None) == "dev":
         run_mode = _get_run_mode()
         if run_mode == "docker":
             _run_backend(["start"])
         else:
-            return _run_run_script(run_mode, env_extra={"DEV": "1"})
+            code = _run_run_script(run_mode, env_extra={"DEV": "1"})
+            if code != 0:
+                print("Aura dev failed (exit code %d). See output above." % code, file=sys.stderr)
+            return code
     if getattr(args, "func", None) == "down":
         run_mode = _get_run_mode()
         if run_mode == "docker":

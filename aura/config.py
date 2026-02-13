@@ -103,6 +103,14 @@ def ensure_backend_config_from_aura(backend_root: Path) -> str:
         src = backend_root / "config" / name
         if src.exists():
             shutil.copy2(src, generated / name)
+            break
+    else:
+        # No models file in backend (e.g. pip install without repo); write minimal so backend does not fail
+        models_path = generated / "models.yaml"
+        models_path.write_text(
+            "local_tools: []\nembedding_providers: {}\nchat_providers: {}\nsummary_strategies: {}\n",
+            encoding="utf-8",
+        )
     return str(generated)
 
 
