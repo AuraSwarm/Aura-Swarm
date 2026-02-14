@@ -137,6 +137,10 @@ celerybeat.pid
 # Aura unified config (may contain secrets; example is tracked)
 config/aura.yaml
 
+# Aura 能力扩展配置（本地/环境相关，不提交）
+config/abilities.yaml
+config/abilities.local.yaml
+
 # Aura generated backend config (from config/aura.yaml)
 .aura/
 
@@ -200,12 +204,15 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# Cursor
-#  Cursor is an AI-powered code editor. `.cursorignore` specifies files/directories to
-#  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data
-#  refer to https://docs.cursor.com/context/ignore-files
+# Cursor IDE — versioned: .cursor/rules/ only; rest = cache/output/local (长线迭代)
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
 .cursorignore
 .cursorindexingignore
+.cursorrules
+# Local / user-local data
+.local/
 
 # Marimo
 marimo/_static/

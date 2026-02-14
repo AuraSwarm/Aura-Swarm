@@ -26,5 +26,8 @@ packages = ["aura"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
-markers = ["module_integration: run module test suites from Aura (requires workspace layout)"]
+markers = [
+    "module_integration: run module test suites from Aura (requires workspace layout)",
+    "real_oss: run test against real Aliyun OSS using Aura config (requires oss2 and aura.yaml oss_*).",
+]
 addopts = "-v"

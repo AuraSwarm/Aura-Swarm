@@ -1,0 +1,46 @@
+# Ability 仓库自带 config：以 local_tools 表示本仓库能力清单，与 backend models.yaml 的 local_tools 同构。
+# 能力仓库更新此文件后，Web 端「刷新能力列表」或后端 reload 即可自动更新能力清单。
+# 复制为 config/abilities.yaml 后编辑（该文件已 gitignore）。与 aura.yaml 中 abilities_file 对应。
+#
+# 字段：id, name, description, command（字符串数组）；同 id 时覆盖主 config 中的定义。
+
+local_tools:
+  - id: echo
+    name: Echo
+    description: Print a message to stdout
+    command: ["echo", "{message}"]
+  - id: date
+    name: Date
+    description: Print current date
+    command: ["date"]
+  # AI CLI 能力（需先安装对应 CLI；prompt 仅限安全字符）
+  - id: cursor
+    name: Cursor CLI
+    description: "Run Cursor CLI (agent) with prompt. Requires Cursor CLI (https://cursor.com/install). Param: prompt."
+    command: ["agent", "-p", "{prompt}"]
+  - id: copilot_cli
+    name: Copilot CLI
+    description: "Run GitHub Copilot CLI with prompt. Requires npm install -g @github/copilot. Param: prompt."
+    command: ["copilot", "-p", "{prompt}"]
+  - id: claude
+    name: Claude CLI
+    description: "Run Anthropic Claude CLI with prompt. Requires Claude Code (https://claude.ai/install). Param: prompt."
+    command: ["claude", "-p", "{prompt}"]
+  # AI CLI Loop（多轮/会话延续）
+  - id: cursor_loop
+    name: Cursor CLI (Loop)
+    description: "Cursor CLI 迭代模式；多次调用形成多轮。Param: prompt."
+    command: ["agent", "-p", "{prompt}"]
+  - id: copilot_cli_loop
+    name: Copilot CLI (Loop)
+    description: "Copilot CLI 迭代模式；多次调用形成多轮。Param: prompt."
+    command: ["copilot", "-p", "{prompt}"]
+  - id: claude_loop
+    name: Claude CLI (Loop)
+    description: "Claude 延续会话 (claude -c)；在最近会话上追加 prompt。Param: prompt."
+    command: ["claude", "-c", "-p", "{prompt}"]
+  # 扩展能力示例（取消注释并修改后使用）：
+  # - id: my_script
+  #   name: 自定义脚本
+  #   description: 执行本地脚本
+  #   command: ["bash", "-c", "{script}"]
