@@ -42,8 +42,9 @@ minio_bucket: "archives"
 # 未设置时需在环境中配置 DASHSCOPE_API_KEY
 
 # --- Anthropic (Claude)：后端 models.yaml 中启用 chat_providers.anthropic 时使用 ---
+# 以下配置会写入生成的后端 app.yaml，启动时设置环境变量 ANTHROPIC_BASE_URL、ANTHROPIC_API_KEY，无需再 export。
 # anthropic_base_url: "https://gaccode.com/claudecode"
-# anthropic_api_key: "<your-token>"
+# anthropic_api_key: "sk-ant-oat01-xxxxxxx"
 # anthropic_api_key: "${ANTHROPIC_API_KEY}"
 
 # Path to shell script for API keys (e.g. ~/.ai_env.sh). Set to "" to disable.
