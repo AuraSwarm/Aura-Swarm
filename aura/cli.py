@@ -42,10 +42,12 @@ def _run_backend(argv: list[str]) -> NoReturn:
 
 
 def _inject_aura_config() -> None:
-    """Ensure backend receives config from Aura (config/aura.yaml); set CONFIG_DIR."""
+    """Ensure backend receives config from Aura (config/aura.yaml); set CONFIG_DIR and BACKEND_CONFIG_SOURCE."""
     root = _backend_root()
     from aura.config import ensure_backend_config_from_aura
     os.environ["CONFIG_DIR"] = ensure_backend_config_from_aura(root)
+    # So 刷新配置 in Web UI syncs models.yaml from backend and shows cursor-local / copilot-local
+    os.environ["BACKEND_CONFIG_SOURCE"] = str(root / "config")
 
 
 def _ensure_first_run_config() -> None:
